@@ -1,10 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { AuthRoutes } from './tab.routes';
 import { Welcome } from '../screens/Welcome';
 import { UserIdentification } from '../screens/UserIdentification';
 import { Confirmation } from '../screens/Confirmation';
-import { PlantSelect } from '../screens/PlantSelect';
+import { PlantSave } from '../screens/PlantSave';
 
 import colors from '../styles/colors';
 
@@ -35,7 +36,15 @@ export function AppRoutes(): JSX.Element {
       />
       <stackRoutes.Screen
         name="PlantSelect"
-        component={PlantSelect}
+        component={AuthRoutes}
+      />
+      <stackRoutes.Screen
+        name="PlantSave"
+        component={PlantSave}
+      />
+      <stackRoutes.Screen
+        name="MyPlants"
+        component={AuthRoutes}
       />
 
     </stackRoutes.Navigator>

@@ -14,26 +14,17 @@ import { Load } from '../components/Load';
 import { api } from '../services/api';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { useNavigation } from '@react-navigation/native';
+import { Plant } from '../libs/storage';
 
 interface Environment {
   key: string;
   title: string;
 }
 
-interface Plant {
-  id: string;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: string[];
-  frequency: {
-    times: number;
-    repeat_every: string;
-  }
-}
-
 export function PlantSelect() {
+  const navigation = useNavigation();
+
   const [environments, setEnvironments] = useState<Environment[]>([]);
   const [plants, setPlants] = useState<Plant[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<Plant[]>([]);
@@ -81,6 +72,10 @@ export function PlantSelect() {
     setLoadingMore(true);
     setPage(oldValue => oldValue + 1)
     fetchPlants();
+  }
+
+  function handlePlantSelect(plant: Plant) {
+    navigation.navigate('PlantSave', { plant });
   }
 
   useEffect(() => {
@@ -140,7 +135,10 @@ export function PlantSelect() {
           data={filteredPlants}
           keyExtractor={(item) => String(item.id)}
           renderItem={({item}) => (
-            <PlantCardPrimary data={item} />
+            <PlantCardPrimary 
+              data={item}
+              onPress={() => handlePlantSelect(item)}
+            />
           )}
           showsVerticalScrollIndicator={false}
           numColumns={2}
